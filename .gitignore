@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Entorno virtual
+venv/
+__pycache__/
+*.py[cod]
+
+# Archivos de sistema y logs
+.DS_Store
+*.log
+
+# Bruno (archivos locales si los hubiera)
+.bruno/

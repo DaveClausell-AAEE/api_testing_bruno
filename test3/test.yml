@@ -1,0 +1,45 @@
+info:
+  name: test
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:5000/productos
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("La respuesta debe ser un 200 OK", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("La respuesta debe ser una lista (array)", function() {
+          const data = res.getBody();
+          expect(Array.isArray(data)).to.be.true;
+        });
+
+        test("Verificar que el 'Teclado Mecánico' existe y tiene precio", function() {
+          const data = res.getBody();
+          
+          // Buscamos el objeto específico en el array
+          const teclado = data.find(p => p.nombre === "Teclado Mecánico");
+          
+          // 1. Verificamos que el teclado exista
+          expect(teclado).to.not.be.undefined;
+          
+          // 2. Verificamos que tenga la propiedad precio
+          expect(teclado).to.have.property('precio');
+          
+          // 3. Verificamos que el precio sea un número y sea el correcto
+          expect(teclado.precio).to.be.a('number');
+          expect(teclado.precio).to.equal(100);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
