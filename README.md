@@ -1,12 +1,41 @@
 API de Productos - Cátedra de Pruebas
 Este proyecto es para practicar pruebas de sistemas con Bruno.
 
-Pasos para los alumnos:
+# Instalar Bruno #
 
-1- Clonar el repositorio.
+[Bruno](https://www.usebruno.com/)
 
-2- Instalar las librerías con: pip install -r requirements.txt
+# Instalar DOCKER #
 
-3- Iniciar el servidor con: python3 app.py
+1- Instalar [Docker](https://docs.docker.com/desktop/setup/install/windows-install/) Desktop.
 
-4- Abrir la carpeta de pruebas en el programa Bruno.
+2- Tener habilitado [ WSL 2](https://docs.docker.com/desktop/setup/install/windows-install/#wsl-verification-and-setup/)
+
+# Crear carpeta de trabajo #
+
+Abri una terminal (PowerShell o CMD) y crea una carpeta para persistir tus archivos. Esto evitara�que tu trabajo se borre al apagar el contenedor:
+
+1- mkdir C:\sandbox.
+
+# Crear y lanzar el contenedor #
+
+Copia y pega este comando en la terminal:
+
+docker run -it ^
+  --privileged ^
+  --name sandbox-estudiante ^
+  -p 5000:5000 ^
+  -v C:\sandbox:/home/sandbox ^
+  debian
+
+# Dentro del contenedor #
+# Configuracion #
+Ya dentro del contenedor (vas a ver que el promt cambio) instala las siguientes dependencias:
+
+apt update && apt install -y python3 python3-pip python3-venv git
+
+# Clonar el repositorio #
+
+cd /home/sandbox
+git clone https://github.com/DaveClausell-AAEE/api_testing_bruno.git
+cd api_testing_bruno
