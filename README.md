@@ -1,26 +1,26 @@
-🧪 Metodología de Pruebas de Sistemas
+Metodología de Pruebas de Sistemas
 
 API de Gestión de Productos & Testing con Bruno
 
-Este repositorio es la base práctica para la cátedra. Aquí encontrarás una API desarrollada en Python (Flask) y una colección de pruebas para realizar testing de caja negra.
+Este proyecto es la base práctica para la cátedra. Aquí encontrarás una API desarrollada en Python (Flask) y una colección de pruebas para realizar testing de caja negra.
 
-📘 Recurso Principal: Infografía Interactiva
+Recurso Principal: Infografía Interactiva
 
-Antes de empezar, te recomendamos consultar nuestra guía visual con todos los comandos necesarios:
+Antes de empezar, consultá nuestra guía visual con todos los comandos necesarios:
 
-👉 VER INFOGRAFÍA DE LA MATERIA
+👉 Link: https://daveclausell-aaee.github.io/api_testing_bruno/guia_testing.html
 
-🛠️ Requisitos Previos
+Requisitos Previos
 
-Instalar Bruno: Descargá el cliente de pruebas desde su sitio oficial.
+Instalar Bruno: Descargá el cliente de pruebas desde: https://www.usebruno.com/
 
 Instalar Docker: Descargá Docker Desktop para Windows.
 
 WSL 2: Asegurate de tener habilitado WSL 2 en tu sistema.
 
-🐳 Configuración del Entorno (Docker)
+Configuración del Entorno (Docker)
 
-Seguí estos pasos en tu terminal (PowerShell o CMD) para crear un entorno de pruebas limpio:
+Seguí estos pasos en tu terminal (PowerShell o CMD):
 
 1. Crear carpeta de trabajo
 
@@ -38,8 +38,6 @@ docker run -it ^
 
 3. Configuración interna (Dentro de Debian)
 
-Una vez dentro del contenedor, instalá las dependencias necesarias:
-
 apt update && apt install -y python3 python3-pip python3-venv git
 
 
@@ -50,29 +48,31 @@ git clone [https://github.com/DaveClausell-AAEE/api_testing_bruno.git](https://g
 cd api_testing_bruno
 
 
-🚀 Cómo correr el Servidor
+Cómo correr el Servidor
 
-Para que la API esté disponible para las pruebas, debés ejecutar los siguientes comandos dentro de la carpeta del proyecto en el contenedor:
+Ejecutá estos comandos dentro de la carpeta del proyecto en el contenedor:
 
-Instalar librerías: pip install -r requirements.txt --break-system-packages
+Instalar librerías:
+pip install -r requirements.txt --break-system-packages
 
-Ejecutar API: python3 app.py
+Ejecutar API:
+python3 app.py
 
-Verás un mensaje que dice Running on http://0.0.0.0:5000. No cierres esta terminal, ya que el servidor debe estar encendido para poder recibir las peticiones.
+Nota: No cierres esta terminal, el servidor debe estar encendido.
 
-🔍 Cómo usar Bruno para las Pruebas
+Cómo usar Bruno para las Pruebas
 
-Abrí la aplicación Bruno en tu Windows.
+Abrí Bruno en Windows.
 
 Hacé clic en "Open Collection".
 
-Buscá en tu computadora la carpeta donde clonaste el proyecto (ejemplo: C:\sandbox\api_testing_bruno\pruebas-api) y selecciónala.
+Buscá la carpeta: C:\sandbox\api_testing_bruno\pruebas-api
 
-Verás las peticiones preparadas. Hacé clic en "Send" para probar los endpoints contra http://localhost:5000.
+Seleccioná la carpeta y usá el botón "Send" para probar contra http://localhost:5000
 
-🆘 Auxilio: ¿Se cerró la terminal?
+Auxilio: ¿Se cerró la terminal?
 
-Si cerraste la terminal por error, el contenedor se detiene pero no se borra. Para volver a entrar sin perder tus archivos, usá este comando:
+Si el contenedor se detiene, usá este comando para volver a entrar:
 
 docker start -ai sandbox-estudiante
 
