@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Git, Docker & API Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        
+        .copy-toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #334155;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+        }
+
+        .copy-toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="max-w-6xl mx-auto mb-12 text-center">
+        <div class="inline-block p-2 px-4 mb-4 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full">
+            Cátedra: Metodología de Pruebas de Sistemas
+        </div>
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+            Guía Esencial de <span class="text-blue-600">Testing & DevOps</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg text-slate-600">
+            Comandos y flujos de trabajo para el desarrollo y prueba de APIs utilizando Git, Docker y Bruno.
+        </p>
+    </header>
+
+    <div class="grid max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-2 lg:grid-cols-3">
+        
+        <!-- SECCIÓN 1: CONFIGURACIÓN -->
+        <section class="p-6 transition-all bg-white border border-slate-200 rounded-2xl shadow-sm card-hover">
+            <div class="flex items-center mb-4 text-blue-600">
+                <i data-lucide="settings" class="mr-2"></i>
+                <h2 class="text-xl font-bold">1. Configuración</h2>
+            </div>
+            <p class="mb-4 text-sm text-slate-500">Configura tu identidad antes de realizar el primer commit.</p>
+            <div class="space-y-3">
+                <div onclick="copyText('git config --global user.name \'Tu Nombre\'')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Identidad</p>
+                    <code class="text-sm text-blue-700 code-font">git config --global user.name...</code>
+                </div>
+                <div onclick="copyText('git config --global credential.helper store')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Recordar Token</p>
+                    <code class="text-sm text-blue-700 code-font">git config --global credential...</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: DOCKER SANDBOX -->
+        <section class="p-6 transition-all bg-white border border-slate-200 rounded-2xl shadow-sm card-hover">
+            <div class="flex items-center mb-4 text-indigo-600">
+                <i data-lucide="box" class="mr-2"></i>
+                <h2 class="text-xl font-bold">2. Docker Sandbox</h2>
+            </div>
+            <p class="mb-4 text-sm text-slate-500">Crea un entorno de pruebas aislado y persistente.</p>
+            <div class="space-y-3">
+                <div onclick="copyText('docker run -it --privileged --name sandbox -p 5000:5000 -v /home/sandbox:/home/sandbox debian')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Crear Contenedor</p>
+                    <code class="text-xs text-indigo-700 code-font block overflow-hidden">docker run -it --privileged...</code>
+                </div>
+                <div onclick="copyText('apt update && apt install -y python3 python3-pip git')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Instalar Herramientas</p>
+                    <code class="text-sm text-indigo-700 code-font">apt update && apt install...</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: CICLO GIT -->
+        <section class="p-6 transition-all bg-white border border-slate-200 rounded-2xl shadow-sm card-hover lg:row-span-2">
+            <div class="flex items-center mb-4 text-emerald-600">
+                <i data-lucide="refresh-cw" class="mr-2"></i>
+                <h2 class="text-xl font-bold">3. Ciclo de Trabajo</h2>
+            </div>
+            <p class="mb-4 text-sm text-slate-500">El flujo diario del analista QA para versionar pruebas.</p>
+            <div class="relative pl-6 space-y-6 border-l-2 border-emerald-100">
+                <div onclick="copyText('git status')" class="relative cursor-pointer">
+                    <div class="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[31px] top-1"></div>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">VERIFICAR</p>
+                    <code class="text-xs text-emerald-700 code-font">git status</code>
+                </div>
+                <div onclick="copyText('git add .')" class="relative cursor-pointer">
+                    <div class="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[31px] top-1"></div>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">PREPARAR</p>
+                    <code class="text-xs text-emerald-700 code-font">git add .</code>
+                </div>
+                <div onclick="copyText('git commit -m \'Mensaje\'')" class="relative cursor-pointer">
+                    <div class="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[31px] top-1"></div>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">CONFIRMAR</p>
+                    <code class="text-xs text-emerald-700 code-font">git commit -m "..."</code>
+                </div>
+                <div onclick="copyText('git push origin main')" class="relative cursor-pointer">
+                    <div class="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[31px] top-1 border-2 border-white"></div>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">SUBIR</p>
+                    <code class="text-xs text-emerald-700 code-font">git push origin main</code>
+                </div>
+            </div>
+            <div class="mt-8 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                <p class="text-xs text-emerald-800 italic">"Si no está en el repositorio, no existe en la prueba."</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: API RUNTIME -->
+        <section class="p-6 transition-all bg-white border border-slate-200 rounded-2xl shadow-sm card-hover">
+            <div class="flex items-center mb-4 text-orange-600">
+                <i data-lucide="play-circle" class="mr-2"></i>
+                <h2 class="text-xl font-bold">4. Ejecución API</h2>
+            </div>
+            <p class="mb-4 text-sm text-slate-500">Lanza el sistema antes de iniciar Bruno.</p>
+            <div class="space-y-3">
+                <div onclick="copyText('pip install -r requirements.txt')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Dependencias</p>
+                    <code class="text-sm text-orange-700 code-font">pip install -r reqs.txt</code>
+                </div>
+                <div onclick="copyText('python3 app.py')" class="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 group">
+                    <p class="text-xs font-semibold text-slate-400">Correr Servidor</p>
+                    <code class="text-sm text-orange-700 code-font">python3 app.py</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: PRO TIPS -->
+        <section class="p-6 transition-all gradient-bg text-white rounded-2xl shadow-lg card-hover">
+            <div class="flex items-center mb-4 text-blue-300">
+                <i data-lucide="zap" class="mr-2"></i>
+                <h2 class="text-xl font-bold">Pro-Tips del Tester</h2>
+            </div>
+            <ul class="space-y-4 text-sm">
+                <li class="flex items-start">
+                    <i data-lucide="check-square" class="w-4 h-4 mr-2 mt-1 flex-shrink-0 text-blue-400"></i>
+                    <span><strong>Falla Rápido:</strong> Si un test da rojo, no sigas. Investiga el código de respuesta.</span>
+                </li>
+                <li class="flex items-start">
+                    <i data-lucide="terminal" class="w-4 h-4 mr-2 mt-1 flex-shrink-0 text-blue-400"></i>
+                    <span><strong>Status 400:</strong> No siempre es error del sistema, puede ser una prueba de "Caja Negra" exitosa.</span>
+                </li>
+                <li class="flex items-start">
+                    <i data-lucide="shield" class="w-4 h-4 mr-2 mt-1 flex-shrink-0 text-blue-400"></i>
+                    <span><strong>Seguridad:</strong> Nunca subas el Token al README. Usa el credential helper.</span>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto mt-16 pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
+        <p>&copy; 2024 Cátedra de Metodología de Pruebas de Sistemas</p>
+        <div class="flex gap-4 mt-4 md:mt-0">
+            <a href="https://www.usebruno.com/" target="_blank" class="hover:text-blue-600 transition">Web de Bruno</a>
+            <a href="https://docs.github.com" target="_blank" class="hover:text-blue-600 transition">Docs Git</a>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="copy-toast">¡Comando copiado al portapapeles!</div>
+
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+
+        // Función para copiar texto
+        function copyText(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // Mostrar toast
+            const toast = document.getElementById("toast");
+            toast.className = "copy-toast show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+    </script>
+</body>
+</html>
