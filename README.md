@@ -2,6 +2,7 @@ Metodología de Pruebas de Sistemas
 
 API de Gestión de Productos & Testing con Bruno
 
+
 Este proyecto es la base práctica para la cátedra. Aquí encontrarás una API desarrollada en Python (Flask) y una colección de pruebas para realizar testing de caja negra.
 
 Recurso Principal: Infografía Interactiva
@@ -10,6 +11,7 @@ Antes de empezar, consultá nuestra guía visual con todos los comandos necesari
 
 👉 Link: https://daveclausell-aaee.github.io/api_testing_bruno/guia_testing.html
 
+
 Requisitos Previos
 
 Instalar Bruno: Descargá el cliente de pruebas desde: https://www.usebruno.com/
@@ -17,6 +19,7 @@ Instalar Bruno: Descargá el cliente de pruebas desde: https://www.usebruno.com/
 Instalar Docker: Descargá Docker Desktop para Windows.
 
 WSL 2: Asegurate de tener habilitado WSL 2 en tu sistema.
+
 
 Configuración del Entorno (Docker)
 
