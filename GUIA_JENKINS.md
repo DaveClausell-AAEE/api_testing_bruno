@@ -55,7 +55,7 @@ pipeline {
 
 ## Tu Misión: El Desafío del Semáforo
 
-1. **La Falla Inicial:** Al ejecutar el Pipeline por primera vez, verás que se pone en **ROJO** (Build Failed)[cite: 20]. [cite_start]Esto es correcto, ya que los tests detectarán los bugs que dejamos en la API.
+1. **La Falla Inicial:** Al ejecutar el Pipeline por primera vez, verás que se pone en **ROJO** (Build Failed). Esto es correcto, ya que los tests detectarán los bugs que dejamos en la API.
 2. **El Análisis:** Revisa los logs de Jenkins para ver qué test de Bruno falló.
-3. [cite_start]**La Solución:** Corrige el error de lógica en tu archivo `app.py`[cite: 21].
-4. [cite_start]**La Victoria:** Haz un `git push` con tu corrección[cite: 21]. [cite_start]Si Jenkins vuelve a correr y el semáforo cambia a **VERDE**, ¡el desafío está cumplido![cite: 21].
+3. **La Solución:** Corrige el error de lógica en tu archivo `app.py`.
+4. **La Victoria:** Haz un `git push` con tu corrección. Si Jenkins vuelve a correr y el semáforo cambia a **VERDE**, ¡el desafío está cumplido!.
