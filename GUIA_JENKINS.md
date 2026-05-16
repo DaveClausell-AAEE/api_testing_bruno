@@ -1,9 +1,9 @@
 # 🚀 Guía de Automatización: Jenkins + Bruno
 
-Este documento contiene las instrucciones técnicas para configurar nuestro Pipeline de Integración Continua. [cite_start]El objetivo es que el "robot" (Jenkins) realice las pruebas de calidad automáticamente[cite: 19, 20].
+Este documento contiene las instrucciones técnicas para configurar nuestro Pipeline de Integración Continua. El objetivo es que el "robot" (Jenkins) realice las pruebas de calidad automáticamente.
 
 ## 1. El archivo Jenkinsfile
-[cite_start]Para que Jenkins sepa qué hacer, debemos crear un archivo llamado `Jenkinsfile` (sin extensión) en la **raíz de tu proyecto** (junto a `app.py`)[cite: 15, 16, 17].
+Para que Jenkins sepa qué hacer, debemos crear un archivo llamado `Jenkinsfile` (sin extensión) en la **raíz de tu proyecto** (junto a `app.py`).
 
 ### Código del Pipeline
 Copia y pega el siguiente código dentro de tu archivo `Jenkinsfile`:
