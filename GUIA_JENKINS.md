@@ -51,6 +51,7 @@ pipeline {
 }
 
 ---
+```
 
 ## 🎯 Tu Misión: El Desafío del Semáforo
 
