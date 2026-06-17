@@ -42,9 +42,9 @@ debian`
 
 ### 4. Clonar el repositorio
 
-`cd /home/sandbox
-git clone https://github.com/DaveClausell-AAEE/api_testing_bruno.git
-cd api_testing_bruno`
+`cd /home/sandbox`
+` git clone https://github.com/DaveClausell-AAEE/api_testing_bruno.git`
+` cd api_testing_bruno`
 
 ## Cómo correr el Servidor
 
