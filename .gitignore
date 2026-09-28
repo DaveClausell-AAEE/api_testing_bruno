@@ -228,3 +228,5 @@ __pycache__/
 
 # Bruno (archivos locales si los hubiera)
 .bruno/
+nohup.out
+*.log
