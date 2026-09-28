@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Centro de control CONAE - SAOCOM</title>
+    <!-- Estilos prediseñados de Bootstrap para que se vea oscuro y espacial -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white p-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+            <h1>🛰️ Portal GeoCONAE</h1>
+            <span class="badge bg-primary fs-6">Constelación SAOCOM</span>
+        </div>
+
+        <h3>Estado de telemetría de radar (SAR)</h3>
+        
+        <table class="table table-dark table-striped mt-3 align-middle">
+            <thead>
+                <tr>
+                    <th>Satélite</th>
+                    <th>Humedad de suelo detectada</th>
+                    <th>Estado del Radar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Flask lee la base de datos SQLite y completa esta tabla automáticamente -->
+                {% for item in telemetria %}
+                <tr>
+                    <td><strong>{{ item.satelite }}</strong></td>
+                    <td>{{ item.humedad_suelo_pct }}%</td>
+                    <td><span class="badge bg-success">{{ item.estado_radar }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
