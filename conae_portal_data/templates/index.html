@@ -2,38 +2,241 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Centro de control CONAE - SAOCOM</title>
-    <!-- Estilos prediseñados de Bootstrap para que se vea oscuro y espacial -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONAE - Centro de Control Misión SAOCOM</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 22px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+        .login-box {
+            background-color: #0f172a;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            margin-bottom: 20px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #94a3b8; font-size: 13px; }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #475569;
+            background-color: #1e293b;
+            color: #ffffff;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            width: 100%;
+        }
+        button:hover { background-color: #0369a1; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; font-size: 13px; }
+        th { background-color: #0f172a; color: #38bdf8; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .activo { background-color: #166534; color: #4ade80; }
+        .standby { background-color: #854d0e; color: #fef08a; }
+        .error-msg { color: #f87171; font-size: 13px; margin-top: 10px; display: none; }
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0f172a;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .admin-col { color: #f43f5e; font-weight: bold; }
+        .hidden { display: none; }
+        .live-tag {
+            background-color: #991b1b;
+            color: #fecaca;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 5px;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+    </style>
 </head>
-<body class="bg-dark text-white p-4">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
-            <h1>🛰️ Portal GeoCONAE</h1>
-            <span class="badge bg-primary fs-6">Constelación SAOCOM</span>
+<body>
+
+<div class="container">
+    <h1>Portal de Control Misión SAOCOM - CONAE</h1>
+
+    <!-- PANTALLA 1: LOGIN -->
+    <div id="pantalla-login" class="login-box">
+        <h3 style="margin-top: 0; color: #f8fafc;">Inicio de Sesión de Operadores</h3>
+        <div class="form-group">
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" placeholder="Ej: operador u admin">
+        </div>
+        <div class="form-group">
+            <label for="clave">Contraseña:</label>
+            <input type="password" id="clave" placeholder="••••••••">
+        </div>
+        <button onclick="realizarLogin()">Ingresar al Sistema</button>
+        <div id="error-login" class="error-msg">Credenciales incorrectas. Intente nuevamente.</div>
+    </div>
+
+    <!-- PANTALLA 2: TELEMETRÍA SEGÚN ROL -->
+    <div id="pantalla-telemetria" class="hidden">
+        <div class="user-header">
+            <span>Usuario: <strong id="user-display" style="color: #38bdf8;">-</strong> (<span id="rol-display">-</span>)</span>
+            <button onclick="cerrarSesion()" style="width: auto; background-color: #991b1b; padding: 5px 10px; font-size: 12px;">Cerrar Sesión</button>
         </div>
 
-        <h3>Estado de telemetría de radar (SAR)</h3>
-        
-        <table class="table table-dark table-striped mt-3 align-middle">
-            <thead>
-                <tr>
-                    <th>Satélite</th>
-                    <th>Humedad de suelo detectada</th>
-                    <th>Estado del Radar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Flask lee la base de datos SQLite y completa esta tabla automáticamente -->
-                {% for item in telemetria %}
-                <tr>
-                    <td><strong>{{ item.satelite }}</strong></td>
-                    <td>{{ item.humedad_suelo_pct }}%</td>
-                    <td><span class="badge bg-success">{{ item.estado_radar }}</span></td>
-                </tr>
-                {% endfor %}
-            </tbody>
+        <h3>Datos de Telemetría Satelital <span id="live-indicator" class="live-tag hidden">EN VIVO</span></h3>
+        <table id="tabla-telemetria">
+            <thead id="tabla-head"></thead>
+            <tbody id="tabla-body"></tbody>
         </table>
     </div>
+</div>
+
+<script>
+    let timerRefresco = null;
+    let tokenActual = null;
+    let rolActual = null;
+
+    async function realizarLogin() {
+        const usuarioInput = document.getElementById('usuario').value;
+        const claveInput = document.getElementById('clave').value;
+        const errorDiv = document.getElementById('error-login');
+
+        try {
+            const respuesta = await fetch('/api/v1/saocom/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario: usuarioInput, clave: claveInput })
+            });
+
+            const datos = await respuesta.json();
+
+            if (respuesta.status === 200 && datos.estado === 'OK') {
+                errorDiv.style.display = 'none';
+                document.getElementById('user-display').innerText = datos.usuario;
+                document.getElementById('rol-display').innerText = datos.rol;
+                
+                tokenActual = datos.token;
+                rolActual = datos.rol;
+
+                await cargarTelemetria();
+                
+                // Refresco automático en vivo cada 2 segundos
+                if (timerRefresco) clearInterval(timerRefresco);
+                timerRefresco = setInterval(cargarTelemetria, 2000);
+
+                document.getElementById('pantalla-login').classList.add('hidden');
+                document.getElementById('pantalla-telemetria').classList.remove('hidden');
+            } else {
+                errorDiv.innerText = datos.mensaje || 'Credenciales inválidas';
+                errorDiv.style.display = 'block';
+            }
+        } catch (err) {
+            errorDiv.innerText = 'Error de conexión con el servidor';
+            errorDiv.style.display = 'block';
+        }
+    }
+
+    async function cargarTelemetria() {
+        if (!tokenActual) return;
+
+        const res = await fetch('/api/v1/saocom/telemetria', {
+            headers: { 'Authorization': tokenActual }
+        });
+        const data = await res.json();
+        
+        const thead = document.getElementById('tabla-head');
+        const tbody = document.getElementById('tabla-body');
+        const liveIndicator = document.getElementById('live-indicator');
+        
+        if (rolActual === 'ADMINISTRADOR') {
+            liveIndicator.classList.remove('hidden');
+            thead.innerHTML = `
+                <tr>
+                    <th>Satélite</th>
+                    <th>Humedad</th>
+                    <th>Radar</th>
+                    <th class="admin-col">Azimuth</th>
+                    <th class="admin-col">Elevación</th>
+                    <th class="admin-col">Altitud</th>
+                    <th class="admin-col">Velocidad</th>
+                </tr>
+            `;
+            tbody.innerHTML = data.telemetria.map(item => `
+                <tr>
+                    <td><strong>${item.satelite}</strong></td>
+                    <td>${item.humedad_suelo_pct}%</td>
+                    <td><span class="badge ${item.estado_radar === 'ACTIVO' ? 'activo' : 'standby'}">${item.estado_radar}</span></td>
+                    <td class="admin-col">${item.telemetria_orbital.azimuth_deg}°</td>
+                    <td class="admin-col">${item.telemetria_orbital.elevacion_deg}°</td>
+                    <td class="admin-col">${item.telemetria_orbital.altitud_km} km</td>
+                    <td class="admin-col">${item.telemetria_orbital.velocidad_kmh} km/h</td>
+                </tr>
+            `).join('');
+        } else {
+            liveIndicator.classList.add('hidden');
+            thead.innerHTML = `
+                <tr>
+                    <th>Satélite</th>
+                    <th>Humedad (%)</th>
+                    <th>Estado Radar</th>
+                </tr>
+            `;
+            tbody.innerHTML = data.telemetria.map(item => `
+                <tr>
+                    <td><strong>${item.satelite}</strong></td>
+                    <td>${item.humedad_suelo_pct}%</td>
+                    <td><span class="badge ${item.estado_radar === 'ACTIVO' ? 'activo' : 'standby'}">${item.estado_radar}</span></td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    function cerrarSesion() {
+        if (timerRefresco) clearInterval(timerRefresco);
+        tokenActual = null;
+        rolActual = null;
+        document.getElementById('usuario').value = '';
+        document.getElementById('clave').value = '';
+        document.getElementById('pantalla-login').classList.remove('hidden');
+        document.getElementById('pantalla-telemetria').classList.add('hidden');
+    }
+</script>
+
 </body>
 </html>
