@@ -1,0 +1,21 @@
+meta {
+  name: Consulta Telemetria Operador
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:5000/api/v1/saocom/telemetria
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: tok-operador-123
+}
+
+assert {
+  res.status: eq 200
+  res.body.estado: eq OK
+  res.body.rol_consultante: eq OPERADOR
+}
