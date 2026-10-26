@@ -1,4 +1,3 @@
-cat << 'EOF' > install_dependencies.sh
 #!/bin/bash
 
 # Exit on error
@@ -65,8 +64,3 @@ echo "Bruno CLI:        $(bru --version 2>/dev/null | head -n 1 || echo 'Instala
 echo "Jenkins WAR:      $(ls -lh /opt/jenkins/jenkins.war 2>/dev/null | awk '{print $5, $9}' || echo 'No encontrado')"
 echo "=========================================================="
 echo "✔ Aprovisionamiento completado exitosamente."
-EOF
-
-# Asignar permisos y ejecutar
-chmod +x install_dependencies.sh
-./install_dependencies.sh

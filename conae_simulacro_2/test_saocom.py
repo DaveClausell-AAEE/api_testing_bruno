@@ -8,28 +8,19 @@ def client():
         yield client
 
 def test_portal_web_status_code(client):
+    """Verifica la disponibilidad base del portal SAOCOM."""
     respuesta = client.get('/')
     assert respuesta.status_code == 200
 
 def test_telemetria_sin_token_devuelve_401(client):
+    """Verifica que la falta total de cabecera responda 401."""
     respuesta = client.get('/api/v1/saocom/telemetria?satelite=SAOCOM_1A')
     assert respuesta.status_code == 401
 
-def test_telemetria_token_falso_devuelve_403(client):
-    """
-    Simulacro 2: Verifica que un token inválido devuelva 403.
-    Al estar el Bug 2 activo (lanza KeyError 500), esta prueba FALLARÁ.
-    """
-    respuesta = client.get('/api/v1/saocom/telemetria?satelite=SAOCOM_1A', 
-                           headers={'Authorization': 'Bearer token_invalido_xyz'})
-    assert respuesta.status_code == 403  # Fallará porque la API devuelve 500
-
-def test_telemetria_operador_exitosa(client):
-    respuesta = client.get('/api/v1/saocom/telemetria?satelite=SAOCOM_1A', 
-                           headers={'Authorization': 'Bearer operador_token_123'})
-    assert respuesta.status_code == 200
-
-def test_login_exitoso_admin(client):
-    respuesta = client.get('/api/v1/saocom/telemetria?satelite=SAOCOM_1A', 
-                           headers={'Authorization': 'Bearer admin_token_999'})
-    assert respuesta.status_code == 200
+# =========================================================================
+# TODO ALUMNO (SIMULACRO 2):
+# Escribir la prueba unitaria 'test_telemetria_token_invalido_devuelve_403(client)'
+# Requerimiento: Realizar GET a '/api/v1/saocom/telemetria?satelite=SAOCOM_1A'
+# enviando cabecera headers={'Authorization': 'Bearer token_trucho_123'}
+# y verificar assert respuesta.status_code == 403.
+# =========================================================================
