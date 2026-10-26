@@ -1,0 +1,15 @@
+meta {
+  name: descarga_saocom
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://127.0.0.1:5001/api/v1/saocom/descarga?satelite=SAOCOM_1A&producto=L1B
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 400
+}
