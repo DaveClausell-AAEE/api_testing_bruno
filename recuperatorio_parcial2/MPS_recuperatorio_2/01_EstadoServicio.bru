@@ -1,0 +1,16 @@
+meta {
+  name: 01 - Estado del Servicio
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/estado
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.estado: eq operativo
+}

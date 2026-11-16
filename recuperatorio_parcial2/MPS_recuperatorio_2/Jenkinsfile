@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    environment {
+        CI = 'true'
+        TERM = 'dumb'
+    }
+
+    stages {
+        stage('1. Verificar Entorno') {
+            steps {
+                dir("${WORKSPACE}") {
+                    sh 'pwd && ls -la'
+                }
+            }
+        }
+
+        stage('2. Pruebas Caja Blanca (PyTest)') {
+            steps {
+                dir("${WORKSPACE}") {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        sh 'pytest -v --tb=short'
+                    }
+                }
+            }
+        }
+
+        stage('3. Pruebas Caja Negra (Bruno CLI)') {
+            steps {
+                dir("${WORKSPACE}") {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        sh '''
+                            python3 app_telemetria.py > flask_jenkins.log 2>&1 &
+                            sleep 2
+                            bru run --env local
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('4. Quality Gate') {
+            steps {
+                script {
+                    if (currentBuild.result == 'FAILURE') {
+                        echo "QUALITY GATE BLOQUEADO: Se detectaron defectos críticos (HTTP 500). No se permite el despliegue."
+                    } else {
+                        echo "QUALITY GATE APROBADO: Todas las pruebas pasaron."
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'pkill -9 -f app_telemetria.py || true'
+        }
+    }
+}

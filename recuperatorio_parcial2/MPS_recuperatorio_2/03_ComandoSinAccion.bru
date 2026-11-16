@@ -1,0 +1,21 @@
+meta {
+  name: 03 - Comando Sin Accion
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/comando
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "objetivo": "antena_principal"
+  }
+}
+
+assert {
+  res.status: eq 400
+}
